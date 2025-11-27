@@ -1,4 +1,4 @@
-CUDA = False
+CUDA = True
 DATA_PATH = './data'
 BATCH_SIZE = 128
 IMAGE_CHANNELS = 1
@@ -17,5 +17,5 @@ num_generator_features = 64
 num_discriminator_features = 64 
 ndf = num_discriminator_features
 nc = IMAGE_CHANNELS
-ngpu = 0
+ngpu = 1
 beta1 = 0.5

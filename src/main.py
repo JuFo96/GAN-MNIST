@@ -143,6 +143,9 @@ def main():
     D_losses = []
     iters = 0
 
+    print(f"CUDA available: {torch.cuda.is_available()}")
+    print(f"Device: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU'}")
+
     print("Starting Training Loop...")
     # For each epoch
     for epoch in range(config.EPOCH_NUM):
@@ -216,6 +219,22 @@ def main():
                 img_list.append(vutils.make_grid(fake, padding=2, normalize=True))
 
             iters += 1
+
+        if (epoch) % 2 == 0:  # Save every 2 epochs
+            checkpoint = {
+                "epoch": epoch,
+                "generator_state_dict": nnGenerator.state_dict(),
+                "discriminator_state_dict": nnDiscriminator.state_dict(),
+                "optimizerG_state_dict": optimizerG.state_dict(),
+                "optimizerD_state_dict": optimizerD.state_dict(),
+            }
+            torch.save(checkpoint, f"dcgan_epoch_{epoch}.pth")
+            print(f"Checkpoint saved at epoch {epoch}")
+
+            
+    torch.save(checkpoint, 'dcgan_final.pth')
+
+
 
 
 
